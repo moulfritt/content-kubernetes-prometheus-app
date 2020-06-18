@@ -17,6 +17,9 @@ metadata:
   name: comicbox
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: comicbox
   template:
     metadata:
       labels:
