@@ -27,11 +27,13 @@ pipeline {
         }
         stage ('Deploy Kubernetes') {
             steps {
-                kubernetesDeploy(
-                        kubeconfigId: 'kubeconfig',
-                        configs: 'deployment.yml',
-                        enableConfigSubstitution: true
-                )
+                script {
+                    kubernetesDeploy(
+                            kubeconfigId: 'kubeconfig',
+                            configs: 'deployment.yml',
+                            enableConfigSubstitution: true
+                    )
+                }
             }
         }
     }
