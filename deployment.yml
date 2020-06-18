@@ -9,7 +9,7 @@ spec:
   ports:
     - port: 3000
       targetPort: 3000
-      nodePort: 8001
+      nodePort: 32003
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
