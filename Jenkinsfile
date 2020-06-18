@@ -1,9 +1,7 @@
+DOCKER_IMAGE_NAME = "fbruslon/comicbox"
 node {
     parameters {
         booleanParam(name: 'Delete', defaultValue: false, description: 'Delete ???')
-    }
-    environnment {
-        DOCKER_IMAGE_NAME = "fbruslon/comicbox"
     }
     stage('Checkout SCM') {
         checkout scm
