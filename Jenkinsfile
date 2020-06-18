@@ -8,21 +8,26 @@ pipeline {
                 checkout scm
             }
         }
-        stage('Build Docker Image') {
-            stage 'Build Docker Image'
-            app = bocker.build(DOCKER_IMAGE_NAME)
+        stage ('Build Docker Image') {
+            steps {
+                app = bocker.build(DOCKER_IMAGE_NAME)
+            }
         }
-        stare('Push Docker image') {
-            docker.withRegistry('https://registry.hub.docker.com', 'docker_hub_login')
-            app.push("${env.BUILD_NUMBER}")
-            app.push("latest")
+        stage ('Push Docker image') {
+            steps {
+                docker.withRegistry('https://registry.hub.docker.com', 'docker_hub_login')
+                app.push("${env.BUILD_NUMBER}")
+                app.push("latest")
+            }
         }
-        stage('Deploy Kubernetes') {
-            kubernetesDeploy(
-                    kubeconfigId: 'kubeconfig',
-                    configs: 'deployment.yml',
-                    enableConfigSubstitution: true
-            )
+        stage ('Deploy Kubernetes') {
+            steps {
+                kubernetesDeploy(
+                        kubeconfigId: 'kubeconfig',
+                        configs: 'deployment.yml',
+                        enableConfigSubstitution: true
+                )
+            }
         }
     }
 }
