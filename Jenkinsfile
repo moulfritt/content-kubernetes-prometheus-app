@@ -10,14 +10,18 @@ pipeline {
         }
         stage ('Build Docker Image') {
             steps {
-                app = bocker.build(DOCKER_IMAGE_NAME)
+                script {
+                    app = docker.build(DOCKER_IMAGE_NAME)
+                }
             }
         }
         stage ('Push Docker image') {
             steps {
-                docker.withRegistry('https://registry.hub.docker.com', 'docker_hub_login')
-                app.push("${env.BUILD_NUMBER}")
-                app.push("latest")
+                script{
+                    docker.withRegistry('https://registry.hub.docker.com', 'docker_hub_login')
+                    app.push("${env.BUILD_NUMBER}")
+                    app.push("latest")
+                }
             }
         }
         stage ('Deploy Kubernetes') {
